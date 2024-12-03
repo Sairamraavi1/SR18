@@ -1,0 +1,45 @@
+variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Insights/dataCollectionRules",
+            "apiVersion": "2023-03-11",
+            "name": "[parameters('dataCollectionRules_DCR_LOG4_CL_name')]",
+            "location": "uksouth",
+            "kind": "Linux",
+            "properties": {
+                "dataCollectionEndpointId": "[parameters('dataCollectionEndpoints_Togetdata_externalid')]",
+                "streamDeclarations": {
+                    "Custom-Json-AM_App_Logs4_CL": {
+                        "columns": [
+                            {
+                                "name": "TimeGenerated",
+                                "type": "datetime"
+                            },
+                            {
+                                "name": "RawData",
+                                "type": "string"
+                            },
+                            {
+                                "name": "FilePath",
+                                "type": "string"
+                            },
+                            {
+                                "name": "Computer",
+                                "type": "string"
+                            }
+                        ]
+                    }
+                },
+                "dataSources": {
+                    "logFiles": [
+                        {
+                            "streams": [
+                                "Custom-Json-AM_App_Logs4_CL"
+                            ],
+                            "filePatterns": [
+                                "/opt/mule-enterprise-standalone-4.4.0/logs/*.log"
+                            ],
+                            "format": "json",
+                            "name": "Custom-Json-AM_App_Logs4_CL"
+                        }
+                    ]
